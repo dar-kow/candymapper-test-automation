@@ -10,4 +10,5 @@ export class HomePageComponents {
   emailErrorMessage = '[data-aid="CONTACT_EMAIL_ERR_REND"]';
   formSubmitSuccess = '[data-aid="CONTACT_FORM_SUBMIT_SUCCESS"]';
   formSuccessMessage = '[data-aid="CONTACT_FORM_SUBMIT_SUCCESS_MESSAGE"]';
+  mainHeading = 'h1#dynamic-tagline-307370';
 }

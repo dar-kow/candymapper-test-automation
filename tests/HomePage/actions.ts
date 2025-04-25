@@ -106,4 +106,9 @@ export class HomePageActions {
     const errorMessage = this.page.locator(this.components.emailErrorMessage);
     return await errorMessage.textContent();
   }
+
+  async getMainHeadingText() {
+    const heading = this.page.locator(this.components.mainHeading);
+    return await heading.textContent();
+  }
 }

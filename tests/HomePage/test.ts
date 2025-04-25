@@ -56,4 +56,12 @@ test.describe('CandyMapper Homepage Tests', () => {
     expect(isErrorVisible).toBeTruthy();
     expect(errorText).toContain(HomePageData.expectedEmailErrorText);
   });
+
+  test('should display correct main heading', async () => {
+    await homePageActions.closePopup();
+
+    const headingText = await homePageActions.getMainHeadingText();
+
+    expect(headingText?.trim()).toContain(HomePageData.expectedHeadingText);
+  });
 });
