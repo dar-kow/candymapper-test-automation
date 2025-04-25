@@ -1,31 +1,35 @@
 {
   "name": "candymapper-test-automation",
   "version": "1.0.0",
+  "description": "A few tests for the CandyMapper web application",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:headed": "playwright test --headed",
+    "test:hd": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "show-report": "playwright show-report",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "playwright",
+    "tests",
+    "automation"
+  ],
+  "author": "darkow",
   "license": "ISC",
-  "type": "module",
-  "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.0",
-    "@typescript-eslint/eslint-plugin": "^8.31.0",
-    "@typescript-eslint/parser": "^8.31.0",
-    "eslint": "^9.25.1",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-playwright": "^2.2.0",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3"
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.41.2",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^0.20.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
   }
 }
