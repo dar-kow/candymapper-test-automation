@@ -2,9 +2,17 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "typescript"],
   "prettier.documentSelectors": ["**/*.{ts,js,json,md}"],
-  "cSpell.words": ["candymapper", "darkow"]
+  "cSpell.words": [
+    "candymapper",
+    "darkow",
+    "loggedout",
+    "networkidle",
+    "packt",
+    "vampira",
+    "vampiras"
+  ]
 }

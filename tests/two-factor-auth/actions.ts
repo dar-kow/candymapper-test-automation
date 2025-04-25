@@ -166,7 +166,7 @@ export class TwoFactorAuthActions {
       await this.closePopup();
     } catch (error) {
       // Popup might not be present, continue with the test
-      console.log('No popup found or already closed');
+      // console.log('No popup found or already closed');
     }
 
     await this.enterEmail(testData.email);

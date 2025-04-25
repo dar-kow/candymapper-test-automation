@@ -1,6 +1,6 @@
 export class TwoFactorAuthComponents {
   // that was tricky I didn't even notice that iframe
-  iframe = '#iframe-06';
+  iframe = 'div[data-ux="Element"] iframe';
 
   popupCloseButton = '#popup-widget88933-close-icon';
 

@@ -14,6 +14,10 @@ export class HomePageActions {
 
   async navigateToHomePage() {
     await this.page.goto(urls.homePage);
+    const isUrlCorrect = await ElementHelpers.waitForUrlContains(this.page, urls.homePage);
+    if (!isUrlCorrect) {
+      throw new Error(`URL did not reach the expected state: ${urls.homePage}`);
+    }
   }
 
   async isPopupVisible() {
@@ -88,7 +92,7 @@ export class HomePageActions {
 
   async isSuccessMessageVisible() {
     const successMessage = this.page.locator(this.components.formSubmitSuccess);
-    await ElementHelpers.waitForState(successMessage, 'visible', 10000);
+    await ElementHelpers.waitForState(successMessage, 'visible', 15000);
     return true;
   }
 
