@@ -4,6 +4,10 @@ export const urls = {
   joinUs: 'https://candymapper.com/m/login?r=%2Fjoin-us',
   bcs: 'https://www.bcs.org/',
   halloweenParty: 'https://candymapper.com/halloween-party',
+  hostParty: 'https://candymapper.com/host-a-party-1',
+  attendParty: 'https://candymapper.com/attend-a-party',
+  partyLocation: 'https://candymapper.com/party-location',
+  error404: 'https://candymapper.com/error-404',
   launchCandyMapper: 'https://candymapper.com/launch-candymapper',
   keysight: 'https://www.keysight.com/blogs/en/authors/jonathon-wright',
   packtPublishing:
