@@ -44,7 +44,7 @@ export class HomePageActions {
     if (!(await this.isInputFillable(input))) {
       throw new Error(`Input with selector "${selector}" is not fillable (disabled or readonly)`);
     }
-
+    await input.focus();
     await input.click();
     await input.clear();
     await input.pressSequentially(value, { delay: 10 });

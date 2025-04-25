@@ -21,6 +21,14 @@ test.describe('CandyMapper Homepage Tests', () => {
     // expect(title).toBe(HomePageData.expectedTitle);
   });
 
+  test('should display correct main heading', async () => {
+    await homePageActions.closePopup();
+
+    const headingText = await homePageActions.getMainHeadingText();
+
+    expect(headingText?.trim()).toContain(HomePageData.expectedHeadingText);
+  });
+
   test('should close popup after clicking close button', async () => {
     const isPopupVisibleInitially = await homePageActions.isPopupVisible();
     expect(isPopupVisibleInitially).toBeTruthy();
@@ -55,13 +63,5 @@ test.describe('CandyMapper Homepage Tests', () => {
     const errorText = await homePageActions.getEmailErrorText();
     expect(isErrorVisible).toBeTruthy();
     expect(errorText).toContain(HomePageData.expectedEmailErrorText);
-  });
-
-  test('should display correct main heading', async () => {
-    await homePageActions.closePopup();
-
-    const headingText = await homePageActions.getMainHeadingText();
-
-    expect(headingText?.trim()).toContain(HomePageData.expectedHeadingText);
   });
 });
