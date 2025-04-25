@@ -6,6 +6,7 @@ For detailed test case documentation, see:
 
 - [Homepage Tests](./TEST-CASES-HOME-PAGE.md)
 - [Two-Factor Authentication Tests](./TEST-CASES-2FA.md)
+- [Navigation Tests](./TEST-CASES-NAVIGATION.md)
 
 ## Project Overview
 
@@ -53,6 +54,12 @@ candymapper-tests/
 │   │   ├── actions.ts          # Page actions (e.g., fillContactForm)
 │   │   ├── components.ts       # Page component selectors
 │   │   ├── data.ts             # Test data and expected results
+│   │   └── test.ts             # Test definitions
+│   │
+│   ├── navigation/             # Navigation-specific files
+│   │   ├── actions.ts          # Page actions (e.g., clickNavLinkByText)
+│   │   ├── components.ts       # Navigation component selectors
+│   │   ├── data.ts             # Navigation labels and expected results
 │   │   └── test.ts             # Test definitions
 │   │
 │   └── two-factor-auth/        # Two-Factor Authentication files
