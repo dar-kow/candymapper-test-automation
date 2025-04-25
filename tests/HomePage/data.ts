@@ -29,6 +29,7 @@ export const HomePageData = {
   expectedTitle: 'CandyMapper.Com',
 
   expectedSuccessText: 'Thank you for your inquiry! We will get back to you within 48 Years.',
+  expectedEmailErrorText: 'Please enter a valid email address.',
 
   timeouts: {
     navigation: 10000,

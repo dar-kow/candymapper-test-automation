@@ -43,4 +43,17 @@ test.describe('CandyMapper Homepage Tests', () => {
     expect(isSuccessVisible).toBeTruthy();
     expect(successText).toContain(HomePageData.expectedSuccessText);
   });
+
+  test('should display validation error when email is not provided', async () => {
+    await homePageActions.closePopup();
+    const contactData = TestData.contactForm().withoutEmail;
+
+    await homePageActions.fillContactForm(contactData);
+    await homePageActions.submitContactForm();
+
+    const isErrorVisible = await homePageActions.isEmailErrorVisible();
+    const errorText = await homePageActions.getEmailErrorText();
+    expect(isErrorVisible).toBeTruthy();
+    expect(errorText).toContain(HomePageData.expectedEmailErrorText);
+  });
 });

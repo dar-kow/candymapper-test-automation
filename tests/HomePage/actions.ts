@@ -96,4 +96,14 @@ export class HomePageActions {
     const successMessage = this.page.locator(this.components.formSuccessMessage);
     return await successMessage.textContent();
   }
+
+  async isEmailErrorVisible() {
+    const errorMessage = this.page.locator(this.components.emailErrorMessage);
+    return await errorMessage.isVisible();
+  }
+
+  async getEmailErrorText() {
+    const errorMessage = this.page.locator(this.components.emailErrorMessage);
+    return await errorMessage.textContent();
+  }
 }
