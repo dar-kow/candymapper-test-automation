@@ -14,6 +14,13 @@ test.describe('CandyMapper Homepage Tests', () => {
     await expect(page).toHaveURL(HomePageData.url, { timeout: HomePageData.timeouts.navigation });
   });
 
+  test('should have correct page title', async ({ page }) => {
+    await expect(page).toHaveTitle(HomePageData.expectedTitle);
+    // or with proper AAA pattern:
+    // const title = await page.title();
+    // expect(title).toBe(HomePageData.expectedTitle);
+  });
+
   test('should close popup after clicking close button', async () => {
     const isPopupVisibleInitially = await homePageActions.isPopupVisible();
     expect(isPopupVisibleInitially).toBeTruthy();
