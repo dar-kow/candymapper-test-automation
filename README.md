@@ -4,10 +4,10 @@ Automated tests for the CandyMapper portal using Playwright.
 
 For detailed test case documentation, see:
 
-- [Homepage Tests](./TEST-CASES-HOME-PAGE.md)
-- [Two-Factor Authentication Tests](./TEST-CASES-2FA.md)
-- [Navigation Tests](./TEST-CASES-NAVIGATION.md)
-- [Halloween Party Tests](./TEST-CASES-HALLOWEEN-PARTY.md)
+- [Homepage Tests](https://github.com/dar-kow/candymapper-test-automation/blob/main/TEST-CASES-HOME-PAGE.md)
+- [Two-Factor Authentication Tests](https://github.com/dar-kow/candymapper-test-automation/blob/main/TEST-CASES-2FA.md)
+- [Navigation Tests](https://github.com/dar-kow/candymapper-test-automation/blob/main/TEST-CASES-NAVIGATION.md)
+- [Halloween Party Tests](https://github.com/dar-kow/candymapper-test-automation/blob/main/TEST-CASES-HALLOWEEN-PARTY.md)
 
 > **Note:**  
 > The TEST-CASE documentation files:  
