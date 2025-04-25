@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HomePageData } from './data';
+import { HomePageData, TestData } from './data';
 import { HomePageActions } from './actions';
 
 test.describe('CandyMapper Homepage Tests', () => {
@@ -29,5 +29,18 @@ test.describe('CandyMapper Homepage Tests', () => {
 
     const isPopupVisibleAfterClose = await homePageActions.isPopupVisible();
     expect(isPopupVisibleAfterClose).toBeFalsy();
+  });
+
+  test('should allow filling and submitting contact form', async () => {
+    await homePageActions.closePopup();
+    const contactData = TestData.contactForm().withEmail;
+
+    await homePageActions.fillContactForm(contactData);
+    await homePageActions.submitContactForm();
+
+    const isSuccessVisible = await homePageActions.isSuccessMessageVisible();
+    const successText = await homePageActions.getSuccessMessageText();
+    expect(isSuccessVisible).toBeTruthy();
+    expect(successText).toContain(HomePageData.expectedSuccessText);
   });
 });

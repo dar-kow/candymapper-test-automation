@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { ElementHelpers, urls } from '../utils';
 import { HomePageComponents } from './components';
+import { ContactFormData } from './data';
 
 export class HomePageActions {
   private page: Page;
@@ -24,5 +25,75 @@ export class HomePageActions {
     const closeButton = this.page.locator(this.components.popupCloseButton);
     await ElementHelpers.waitForState(closeButton, 'visible');
     await closeButton.click();
+  }
+
+  private async isInputFillable(input: Locator) {
+    const isDisabled = await input.getAttribute('disabled');
+    const isReadonly = await input.getAttribute('readonly');
+    return isDisabled === null && isReadonly === null;
+  }
+
+  // interestingly behaving inputs - fill does not provide full effectiveness, hence pressSequentially
+  private async fillAndVerifyInput(selector: string, value: string) {
+    const input = this.page.locator(selector);
+
+    await input.scrollIntoViewIfNeeded();
+
+    await ElementHelpers.waitForState(input, 'visible');
+
+    if (!(await this.isInputFillable(input))) {
+      throw new Error(`Input with selector "${selector}" is not fillable (disabled or readonly)`);
+    }
+
+    await input.click();
+    await input.clear();
+    await input.pressSequentially(value, { delay: 10 });
+    await input.blur();
+
+    // Here I’m using the Return-Early Pattern (a.k.a. Guard Clause)
+    // so I don’t have to check that everything’s OK
+    // we expect the best, but we’re prepared for the worst. :P
+    const inputValue = await input.inputValue();
+    if (inputValue !== value) {
+      throw new Error(
+        `Input value mismatch for selector "${selector}". Expected: "${value}", got: "${inputValue}"`,
+      );
+    }
+  }
+
+  // interesting action, the first entered email gives 100% effectiveness when clicking submit
+  async fillContactForm(formData: ContactFormData) {
+    if (formData.email !== null) {
+      await this.fillAndVerifyInput(this.components.emailInput, formData.email);
+    } else {
+      await this.fillAndVerifyInput(this.components.emailInput, '');
+    }
+    await this.fillAndVerifyInput(this.components.firstNameInput, formData.firstName);
+    await this.fillAndVerifyInput(this.components.lastNameInput, formData.lastName);
+
+    if (formData.phone) {
+      await this.fillAndVerifyInput(this.components.phoneInput, formData.phone);
+    }
+
+    await this.fillAndVerifyInput(this.components.messageTextarea, formData.message);
+  }
+
+  async submitContactForm() {
+    const submitButton = this.page.locator(this.components.submitButton);
+    await submitButton.scrollIntoViewIfNeeded();
+    await ElementHelpers.waitForState(submitButton, 'visible');
+    await submitButton.hover();
+    await submitButton.click();
+  }
+
+  async isSuccessMessageVisible() {
+    const successMessage = this.page.locator(this.components.formSubmitSuccess);
+    await ElementHelpers.waitForState(successMessage, 'visible', 10000);
+    return true;
+  }
+
+  async getSuccessMessageText() {
+    const successMessage = this.page.locator(this.components.formSuccessMessage);
+    return await successMessage.textContent();
   }
 }
