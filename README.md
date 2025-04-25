@@ -2,7 +2,10 @@
 
 Automated tests for the CandyMapper portal using Playwright.
 
-For detailed test case documentation, see [TEST-CASES.md](./TEST-CASES.md).
+For detailed test case documentation, see:
+
+- [Homepage Tests](./TEST-CASES-HOME-PAGE.md)
+- [Two-Factor Authentication Tests](./TEST-CASES-2FA.md)
 
 ## Project Overview
 
@@ -45,9 +48,15 @@ candymapper-tests/
 │   ├── index.ts                # Export consolidation for easier imports
 │   ├── helpers.ts              # Shared helper methods
 │   └── urls.ts                 # URL constants
-├── pages/                      # Page objects
-│   └── homepage/               # Homepage-specific files
-│       ├── actions.ts          # Page actions (e.g., fillContactForm)
+├── tests/                      # Page objects
+│   ├── homepage/               # Homepage-specific files
+│   │   ├── actions.ts          # Page actions (e.g., fillContactForm)
+│   │   ├── components.ts       # Page component selectors
+│   │   ├── data.ts             # Test data and expected results
+│   │   └── test.ts             # Test definitions
+│   │
+│   └── two-factor-auth/        # Two-Factor Authentication files
+│       ├── actions.ts          # Page actions (e.g., completeTwoFactorAuth)
 │       ├── components.ts       # Page component selectors
 │       ├── data.ts             # Test data and expected results
 │       └── test.ts             # Test definitions
@@ -125,3 +134,7 @@ Preference for clear conditional structures over extensive use of `else` blocks,
 Implementation of the Early Return Pattern to improve code readability and reduce nesting. This pattern involves checking for error or edge conditions first and returning early, rather than nesting the main logic inside conditional blocks.
 
 More info: [Early Return Pattern](https://medium.com/swlh/return-early-pattern-3d18a41bba8)
+
+### 8. Iframe Handling
+
+The Two-Factor Authentication tests showcase advanced iframe handling techniques, using both Playwright's `frameLocator()` and direct frame access via `contentFrame()` for robust element interactions within nested content.
