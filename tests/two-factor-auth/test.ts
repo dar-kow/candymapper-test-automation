@@ -3,7 +3,7 @@ import { TwoFactorAuthActions } from './actions';
 import { TwoFactorAuthPageData, TwoFactorAuthTestData } from './data';
 import { TwoFactorAuthComponents } from './components';
 
-test.describe.only('CandyMapper Two-Factor Authentication Tests', () => {
+test.describe('CandyMapper Two-Factor Authentication Tests', () => {
   let twoFactorAuthActions: TwoFactorAuthActions;
   let twoFactorAuthComponents: TwoFactorAuthComponents;
 
