@@ -1,4 +1,4 @@
-import { Page, BrowserContext, Frame, FrameLocator } from '@playwright/test';
+import { Page, BrowserContext, FrameLocator } from '@playwright/test';
 import { NavigationComponents } from './components';
 import { ElementHelpers, urls } from '../utils';
 

@@ -1,4 +1,4 @@
-import { Frame, FrameLocator, Locator, Page } from '@playwright/test';
+import { Frame, Locator, Page } from '@playwright/test';
 
 type PageOrFrameLocator = Page | Frame;
 
