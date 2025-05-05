@@ -12,7 +12,9 @@ test.describe("CandyMapper Main Navigation Tests", () => {
     await navigationActions.closePopupIfPresent();
   });
 
-  test("should navigate to Join Us page", async ({ page }) => {
+  test("TC_001:Given_userOnHomepage_When_clicksJoinUsNavlink_Then_navigatesToJoinUsPage", async ({
+    page,
+  }) => {
     // Arrange in beforeEach
 
     // Act
@@ -28,7 +30,9 @@ test.describe("CandyMapper Main Navigation Tests", () => {
     });
   });
 
-  test("should open British Computer Society in new tab", async ({ context }) => {
+  test("TC_002:Given_userOnHomepage_When_clicksBcsNavlink_Then_opensBcsInNewTab", async ({
+    context,
+  }) => {
     // Arrange
     const newPage = await navigationActions.clickNavLinkAndWaitForNewPage(
       NavigationData.menuLabels.bcs,
@@ -55,7 +59,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     await navigationActions.clickMoreDropdown();
   });
 
-  test("should navigate to Halloween Party page", async ({ page }) => {
+  test("TC_003:Given_userOnHomepage_When_clicksHalloweenPartyNavlink_Then_navigatesToHalloweenPartyPage", async ({
+    page,
+  }) => {
     // Arrange - in beforeEach
 
     // Act
@@ -70,7 +76,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     });
   });
 
-  test("should navigate to Launch CandyMapper page and verify loader", async ({ page }) => {
+  test("TC_004:Given_userOnHomepage_When_clicksLaunchCandyMapperNavlink_Then_navigatesToLaunchCandyMapperPageAndVerifiesLoader", async ({
+    page,
+  }) => {
     // Arrange - in beforeEach
 
     // Act
@@ -87,7 +95,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     });
   });
   // skipped due to real CloudFlare site human checking - I don't want to spam someone's site
-  test.skip("should open Keysight page in new tab", async ({ context }) => {
+  test.skip("TC_005:Given_userOnHomepage_When_clicksKeysightNavlink_Then_opensKeysightPageInNewTab", async ({
+    context,
+  }) => {
     // Act
     const newPage = await navigationActions.clickMoreMenuLinkAndWaitForNewPage(
       NavigationData.menuLabels.keysight,
@@ -106,7 +116,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     await newPage.close();
   });
 
-  test("should open PACKT PUBLISHING page in new tab", async ({ context }) => {
+  test("TC_006:Given_userOnHomepage_When_clicksPacktPublishingNavlink_Then_opensPacktPublishingPageInNewTab", async ({
+    context,
+  }) => {
     // Act
     const newPage = await navigationActions.clickMoreMenuLinkAndWaitForNewPage(
       "PACKT PUBLISHING",
@@ -126,7 +138,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     await newPage.close();
   });
 
-  test("should navigate to FIND MY CANDY page", async ({ page }) => {
+  test("TC_007:Given_userOnHomepage_When_clicksFindMyCandyNavlink_Then_navigatesToFindMyCandyPage", async ({
+    page,
+  }) => {
     // Act
     await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.findMyCandy);
     const sectionTitle = await navigationActions.getFindMyCandyTitle();
@@ -138,7 +152,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     expect(sectionTitle).toContain(NavigationData.expectedContent.findMyCandy);
   });
 
-  test("should navigate to An Automation Sandbox page", async ({ page }) => {
+  test("TC_008:Given_userOnHomepage_When_clicksAutomationSandboxNavlink_Then_navigatesToAutomationSandboxPage", async ({
+    page,
+  }) => {
     // Click on Automation Sandbox link in More dropdown
     await navigationActions.clickMoreMenuLinkByText(NavigationData.expectedContent.sandboxTools);
 
@@ -152,7 +168,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     expect(sectionTitle).toContain(NavigationData.expectedContent.automationSandbox);
   });
 
-  test("should open Graveyard Links Golfing page in new tab", async ({ context }) => {
+  test("TC_009:Given_userOnHomepage_When_clicksGraveyardLinksNavlink_Then_opensGraveyardLinksPageInNewTab", async ({
+    context,
+  }) => {
     // Act
     const newPage = await navigationActions.clickMoreMenuLinkAndWaitForNewPage(
       NavigationData.menuLabels.graveyardLinks,
@@ -168,7 +186,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     await newPage.close();
   });
 
-  test("should navigate to Magic Object Model page", async ({ page }) => {
+  test("TC_010:Given_userOnHomepage_When_clicksMagicObjectModelNavlink_Then_navigatesToMagicObjectModelPage", async ({
+    page,
+  }) => {
     // Act
     await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.magicObjectModel);
     const sectionTitle = await navigationActions.getMagicObjectModelTitle();
@@ -180,7 +200,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     expect(sectionTitle).toContain(NavigationData.expectedContent.magicObjectModel);
   });
 
-  test("should navigate to Sandbox Tools page", async ({ page }) => {
+  test("TC_011:Given_userOnHomepage_When_clicksSandboxToolsNavlink_Then_navigatesToSandboxToolsPage", async ({
+    page,
+  }) => {
     // Act
     await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.sandboxTools);
     const buttonsVisible = await navigationActions.areSandboxToolButtonsVisible();
@@ -192,7 +214,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     expect(buttonsVisible).toBeTruthy();
   });
 
-  test("should navigate to Vampira's Blog page", async ({ page }) => {
+  test("TC_012:Given_userOnHomepage_When_clicksVampirasBlogNavlink_Then_navigatesToVampirasBlogPage", async ({
+    page,
+  }) => {
     // Act
     await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.vampirasBlog);
     const sectionTitle = await navigationActions.getVampirasBlogTitle();
@@ -204,7 +228,9 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     expect(sectionTitle).toContain(NavigationData.expectedContent.vampirasBlog);
   });
 
-  test("should navigate to 2FA Validation code page", async ({ page }) => {
+  test("TC_013:Given_userOnHomepage_When_clicksTwoFaValidationNavlink_Then_navigatesToTwoFaValidationPage", async ({
+    page,
+  }) => {
     // Act
     await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.twoFAValidation);
     const isIframeVisible = await navigationActions.is2FAIframeVisible();
