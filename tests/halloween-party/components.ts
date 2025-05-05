@@ -13,8 +13,8 @@ export class HalloweenPartyComponents {
   goBackButton = 'a[href="/error-404"]';
 
   // Party Location page
-  guestDropdown = 'select#guests';
-  guestOptions = 'select#guests option';
+  guestDropdown = "select#guests";
+  guestOptions = "select#guests option";
   emailInput = 'input[role="textbox"]';
   submitButton = 'button[data-aid="SUBSCRIBE_SUBMIT_BUTTON_REND"]';
   emailError = '[data-aid="SUBSCRIBE_EMAIL_ERR_REND"]';
@@ -22,8 +22,8 @@ export class HalloweenPartyComponents {
   htmlSection = '[data-aid="HTML_SECTION_TITLE_RENDERED"]';
 
   // Popup components
-  popupContainer = '#popup-widget190016';
-  popupCloseButton = '#popup-widget190016-close-icon';
+  popupContainer = "#popup-widget190016";
+  popupCloseButton = "#popup-widget190016-close-icon";
 
   // iframe components
   iframe = 'div[data-ux="Element"] iframe';
