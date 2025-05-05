@@ -1,7 +1,7 @@
 export class NavigationComponents {
   // Popup selectors
-  popupCloseButton = '#popup-widget307423-close-icon';
-  popup = '#popup-widget307423';
+  popupCloseButton = "#popup-widget307423-close-icon";
+  popup = "#popup-widget307423";
 
   // Main navigation selectors
   mainNav = 'ul[data-ux="NavFooter"]';
@@ -21,9 +21,9 @@ export class NavigationComponents {
 
   // id variable that's why I use div attribute + nesting
   iframe = 'div[data-ux="Element"] iframe';
-  loader = 'div.loader';
+  loader = "div.loader";
 
-  authorBioSection = '#author-bio';
+  authorBioSection = "#author-bio";
 
   findMyCandyTitle = '[data-aid="HTML_SECTION_TITLE_RENDERED"]';
 
@@ -40,5 +40,5 @@ export class NavigationComponents {
 
   vampirasBlogTitle = '[data-aid="RSS_SECTION_TITLE_RENDERED"]';
 
-  email = '#email';
+  email = "#email";
 }

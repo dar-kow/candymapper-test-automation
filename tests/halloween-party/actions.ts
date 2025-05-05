@@ -1,7 +1,7 @@
-import { Frame, FrameLocator, Page } from '@playwright/test';
-import { HalloweenPartyComponents } from './components';
-import { PartyData } from './data';
-import { ElementHelpers, urls } from '../utils';
+import { Frame, FrameLocator, Page } from "@playwright/test";
+import { HalloweenPartyComponents } from "./components";
+import { PartyData } from "./data";
+import { ElementHelpers, urls } from "../utils";
 
 export class HalloweenPartyActions {
   private page: Page;
@@ -33,7 +33,7 @@ export class HalloweenPartyActions {
     }
 
     if (!this.frame) {
-      throw new Error('Failed to initialize frame.');
+      throw new Error("Failed to initialize frame.");
     }
   }
 
@@ -44,20 +44,20 @@ export class HalloweenPartyActions {
 
       if (isVisible) {
         const closeButton = this.page.locator(this.components.popupCloseButton);
-        await ElementHelpers.waitForState(closeButton, 'visible');
+        await ElementHelpers.waitForState(closeButton, "visible");
         await closeButton.click();
-        await ElementHelpers.waitForState(popup, 'hidden');
+        await ElementHelpers.waitForState(popup, "hidden");
       }
     } catch (error) {
       // If popup doesn't appear or times out, just continue
-      console.log('No popup found or already closed');
+      console.log("No popup found or already closed");
     }
   }
 
   async clickHostPartyButton() {
     await this.closePopupIfPresent();
     const button = this.page.locator(this.components.hostPartyButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForSelector(this.components.mainHeading);
   }
@@ -65,42 +65,42 @@ export class HalloweenPartyActions {
   async clickAttendPartyButton() {
     await this.closePopupIfPresent();
     const button = this.page.locator(this.components.attendPartyButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForSelector(this.components.mainHeading);
   }
 
   async selectZombiesTheme() {
     const button = this.page.locator(this.components.zombiesButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForURL(/party-location/);
   }
 
   async selectGhostsTheme() {
     const button = this.page.locator(this.components.ghostsButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForURL(/party-location/);
   }
 
   async selectZombietonLocation() {
     const button = this.page.locator(this.components.zombiesButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForURL(/party-location/);
   }
 
   async selectGhostvilleLocation() {
     const button = this.page.locator(this.components.ghostsButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForURL(/party-location/);
   }
 
   async clickGoBackButton() {
     const button = this.page.locator(this.components.goBackButton);
-    await ElementHelpers.waitForState(button, 'visible');
+    await ElementHelpers.waitForState(button, "visible");
     await button.click();
     await this.page.waitForURL(/error-404/);
   }
@@ -111,7 +111,7 @@ export class HalloweenPartyActions {
     }
 
     const dropdown = this.frame!.locator(this.components.guestDropdown);
-    await ElementHelpers.waitForState(dropdown, 'visible', 10000);
+    await ElementHelpers.waitForState(dropdown, "visible", 10000);
     await dropdown.selectOption(guests.toString());
 
     // Verify the selection
@@ -126,13 +126,13 @@ export class HalloweenPartyActions {
       this.page,
       this.components.emailInput,
       email,
-      'Email',
+      "Email",
     );
   }
 
   async submitForm() {
     const submitButton = this.page.locator(this.components.submitButton);
-    await ElementHelpers.waitForState(submitButton, 'visible');
+    await ElementHelpers.waitForState(submitButton, "visible");
     await submitButton.click();
   }
 
@@ -144,7 +144,7 @@ export class HalloweenPartyActions {
 
   async isEmailErrorVisible() {
     const errorMessage = this.page.locator(this.components.emailError).last();
-    return await ElementHelpers.waitForState(errorMessage, 'visible');
+    return await ElementHelpers.waitForState(errorMessage, "visible");
   }
 
   async getEmailErrorText() {
@@ -154,7 +154,7 @@ export class HalloweenPartyActions {
 
   async isConfirmationMessageVisible() {
     const confirmationMessage = this.page.locator(this.components.confirmationMessage);
-    return await ElementHelpers.waitForState(confirmationMessage, 'visible', 5000).catch(
+    return await ElementHelpers.waitForState(confirmationMessage, "visible", 5000).catch(
       () => false,
     );
   }
@@ -185,7 +185,7 @@ export class HalloweenPartyActions {
     }
 
     const selectedOption = this.frame!.locator(`${this.components.guestOptions}[selected]`);
-    const optionValue = await selectedOption.getAttribute('value');
+    const optionValue = await selectedOption.getAttribute("value");
     return optionValue === value;
   }
 }

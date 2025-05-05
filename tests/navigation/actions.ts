@@ -1,12 +1,12 @@
-import { Page, BrowserContext, FrameLocator } from '@playwright/test';
-import { NavigationComponents } from './components';
-import { ElementHelpers, urls } from '../utils';
+import { Page, BrowserContext, FrameLocator } from "@playwright/test";
+import { NavigationComponents } from "./components";
+import { ElementHelpers, urls } from "../utils";
 
 export enum ElementState {
-  Visible = 'visible',
-  Hidden = 'hidden',
-  Attached = 'attached',
-  Detached = 'detached',
+  Visible = "visible",
+  Hidden = "hidden",
+  Attached = "attached",
+  Detached = "detached",
 }
 
 export class NavigationActions {
@@ -52,7 +52,7 @@ export class NavigationActions {
     await this.clickNavLinkByText(linkText);
 
     // Wait for a new page to be created
-    await context.waitForEvent('page');
+    await context.waitForEvent("page");
 
     // Return the newly opened page
     return context.pages()[pagesBefore];
@@ -93,7 +93,7 @@ export class NavigationActions {
     await this.clickMoreMenuLinkByText(linkText);
 
     // Wait for a new page to be created
-    await context.waitForEvent('page');
+    await context.waitForEvent("page");
 
     // Return the newly opened page
     return context.pages()[pagesBefore];
@@ -163,7 +163,7 @@ export class NavigationActions {
       const emailInput = frameLocator.locator(this.components.email);
       return await emailInput.isVisible().catch(() => false);
     } catch (error) {
-      console.error('Error checking email field in iframe:', error);
+      console.error("Error checking email field in iframe:", error);
       return false;
     }
   }

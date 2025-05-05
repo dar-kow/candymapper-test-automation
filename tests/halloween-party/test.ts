@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
-import { HalloweenPartyActions } from './actions';
-import { HalloweenPartyPageData, HalloweenPartyTestData } from './data';
-import { urls } from '../utils';
+import { test, expect } from "@playwright/test";
+import { HalloweenPartyActions } from "./actions";
+import { HalloweenPartyPageData, HalloweenPartyTestData } from "./data";
+import { urls } from "../utils";
 
-test.describe('CandyMapper Halloween Party Tests', () => {
+test.describe("CandyMapper Halloween Party Tests", () => {
   let partyActions: HalloweenPartyActions;
 
   test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     await partyActions.closePopupIfPresent();
   });
 
-  test('should display correct headings on the main Halloween party page', async () => {
+  test("should display correct headings on the main Halloween party page", async () => {
     // Arrange - in beforeEach
 
     // Act
@@ -24,21 +24,21 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     expect(secondaryHeadingText?.trim()).toBe(HalloweenPartyPageData.headings.subHeading);
   });
 
-  test.describe('Hosting a Party Flow', () => {
+  test.describe("Hosting a Party Flow", () => {
     test.beforeEach(async () => {
       await partyActions.clickHostPartyButton();
     });
 
-    test('should navigate to theme selection page when clicking Host Party', async ({ page }) => {
+    test("should navigate to theme selection page when clicking Host Party", async ({ page }) => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(/host-a-party-1/);
+      await expect(page).toHaveURL(urls.hostParty);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.themeHeading);
     });
 
-    test('should navigate to party location page when selecting Zombies theme', async ({
+    test("should navigate to party location page when selecting Zombies theme", async ({
       page,
     }) => {
       // Arrange - in beforeEach
@@ -47,30 +47,30 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       await partyActions.selectZombiesTheme();
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(urls.partyLocation);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test('should navigate to party location page when selecting Ghosts theme', async ({ page }) => {
+    test("should navigate to party location page when selecting Ghosts theme", async ({ page }) => {
       // Arrange - in beforeEach
 
       // Act
       await partyActions.selectGhostsTheme();
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(urls.partyLocation);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test.describe('Party Registration Form', () => {
+    test.describe("Party Registration Form", () => {
       test.beforeEach(async () => {
         await partyActions.selectZombiesTheme();
       });
 
       // failing because of wrong implementation - option value is not set correctly in the select element
-      test('should allow selecting different numbers of guests', async () => {
+      test("should allow selecting different numbers of guests", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -82,7 +82,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show error message when email is empty', async () => {
+      test("should show error message when email is empty", async () => {
         // Arrange - in beforeEach
 
         // Act
@@ -95,7 +95,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         expect(errorText).toContain(HalloweenPartyPageData.messages.emailError);
       });
 
-      test('should show error message when email is invalid', async () => {
+      test("should show error message when email is invalid", async () => {
         // Arrange
         const partyData = {
           email: HalloweenPartyTestData.getInvalidEmail(),
@@ -112,7 +112,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         expect(errorText).toContain(HalloweenPartyPageData.messages.emailError);
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("should show confirmation message when email is valid", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 
@@ -128,21 +128,21 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     });
   });
 
-  test.describe('Attending a Party Flow', () => {
+  test.describe("Attending a Party Flow", () => {
     test.beforeEach(async () => {
       await partyActions.clickAttendPartyButton();
     });
 
-    test('should navigate to attend party page when clicking Attend Party', async ({ page }) => {
+    test("should navigate to attend party page when clicking Attend Party", async ({ page }) => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(/attend-a-party/);
+      await expect(page).toHaveURL(urls.attendParty);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.attendAParty);
     });
 
-    test('should navigate to party location page when selecting Zombieton location', async ({
+    test("should navigate to party location page when selecting Zombieton location", async ({
       page,
     }) => {
       // Arrange - in beforeEach
@@ -151,12 +151,12 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       await partyActions.selectZombietonLocation();
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(urls.partyLocation);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test('should navigate to party location page when selecting Ghostville location', async ({
+    test("should navigate to party location page when selecting Ghostville location", async ({
       page,
     }) => {
       // Arrange - in beforeEach
@@ -165,13 +165,13 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       await partyActions.selectGhostvilleLocation();
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(urls.partyLocation);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
     //error bug - should navigate to home page instead of 404 page
-    test('should navigate to main page when clicking Go Back button', async ({ page }) => {
+    test("should navigate to main page when clicking Go Back button", async ({ page }) => {
       // Arrange - in beforeEach
 
       // Act
@@ -181,12 +181,12 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       await expect(page).toHaveURL(urls.partyLocation);
     });
 
-    test.describe('Party Registration Form After Selecting Zombieton', () => {
+    test.describe("Party Registration Form After Selecting Zombieton", () => {
       test.beforeEach(async () => {
         await partyActions.selectZombietonLocation();
       });
 
-      test('should allow selecting different numbers of guests', async () => {
+      test("should allow selecting different numbers of guests", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -198,7 +198,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("should show confirmation message when email is valid", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 
@@ -213,12 +213,12 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       });
     });
 
-    test.describe('Party Registration Form After Selecting Ghostville', () => {
+    test.describe("Party Registration Form After Selecting Ghostville", () => {
       test.beforeEach(async () => {
         await partyActions.selectGhostvilleLocation();
       });
 
-      test('should allow selecting different numbers of guests', async () => {
+      test("should allow selecting different numbers of guests", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -230,7 +230,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("should show confirmation message when email is valid", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 

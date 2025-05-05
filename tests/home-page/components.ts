@@ -1,6 +1,6 @@
 export class HomePageComponents {
-  popupContainer = '#popup-widget307423';
-  popupCloseButton = '#popup-widget307423-close-icon';
+  popupContainer = "#popup-widget307423";
+  popupCloseButton = "#popup-widget307423-close-icon";
   firstNameInput = 'input[data-aid="First Name"]';
   lastNameInput = 'input[data-aid="Last Name"]';
   emailInput = 'input[data-aid="CONTACT_FORM_EMAIL"]';
@@ -10,5 +10,5 @@ export class HomePageComponents {
   emailErrorMessage = '[data-aid="CONTACT_EMAIL_ERR_REND"]';
   formSubmitSuccess = '[data-aid="CONTACT_FORM_SUBMIT_SUCCESS"]';
   formSuccessMessage = '[data-aid="CONTACT_FORM_SUBMIT_SUCCESS_MESSAGE"]';
-  mainHeading = 'h1#dynamic-tagline-307370';
+  mainHeading = "h1#dynamic-tagline-307370";
 }
