@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./test-results:/app/test-results
+    environment:
+      - CI=true
+      #- DEBUG=pw:browser*
+      - NODE_ENV=production
+    cap_add:
+      - SYS_ADMIN
+    shm_size: 2gb
+    tmpfs:
+      - /tmp

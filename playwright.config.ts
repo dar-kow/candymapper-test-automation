@@ -10,8 +10,8 @@ export default defineConfig({
   },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : 2,
-  reporter: [['html', { open: 'never' }], ['list']],
+  workers: process.env.CI ? 1 : 3,
+  reporter: [['html', { open: process.env.CI ? 'never' : 'on-failure' }], ['list']],
   use: {
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
@@ -30,9 +30,7 @@ export default defineConfig({
     },
     {
       name: 'chrome',
-      use: {
-        channel: 'chrome',
-      },
+      use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'safari',

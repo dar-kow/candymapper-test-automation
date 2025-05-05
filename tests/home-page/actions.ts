@@ -48,10 +48,14 @@ export class HomePageActions {
     if (!(await this.isInputFillable(input))) {
       throw new Error(`Input with selector "${selector}" is not fillable (disabled or readonly)`);
     }
+    // this is for safari to fit in the timeout
+    const browserName = this.page.context().browser()?.browserType().name();
+    const delay = browserName === 'webkit' ? 0 : 10;
+
     await input.focus();
     await input.click();
     await input.clear();
-    await input.pressSequentially(value, { delay: 10 });
+    await input.pressSequentially(value, { delay: delay });
     await input.blur();
 
     // Here I’m using the Return-Early Pattern (a.k.a. Guard Clause)

@@ -86,8 +86,8 @@ test.describe('CandyMapper More Menu Navigation Tests', () => {
       timeout: NavigationData.timeouts.navigation,
     });
   });
-
-  test('should open Keysight page in new tab', async ({ context }) => {
+  // skipped due to real CloudFlare site human checking - I don't want to spam someone's site
+  test.skip('should open Keysight page in new tab', async ({ context }) => {
     // Click on Keysight link and wait for new page
     const newPage = await navigationActions.clickMoreMenuLinkAndWaitForNewPage(
       NavigationData.menuLabels.keysight,
