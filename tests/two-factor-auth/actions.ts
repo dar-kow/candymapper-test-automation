@@ -1,7 +1,7 @@
-import { Page, Frame, FrameLocator } from '@playwright/test';
-import { TwoFactorAuthComponents } from './components';
-import { TwoFactorAuthData } from './data';
-import { ElementHelpers, urls } from '../utils';
+import { Page, Frame, FrameLocator } from "@playwright/test";
+import { TwoFactorAuthComponents } from "./components";
+import { TwoFactorAuthData } from "./data";
+import { ElementHelpers, urls } from "../utils";
 
 export class TwoFactorAuthActions {
   private page: Page;
@@ -38,115 +38,115 @@ export class TwoFactorAuthActions {
     }
 
     if (!this.frame) {
-      throw new Error('Failed to initialize frame.');
+      throw new Error("Failed to initialize frame.");
     }
   }
 
   async closePopup() {
     const closeButton = this.page.locator(this.components.popupCloseButton);
-    await ElementHelpers.waitForState(closeButton, 'visible');
+    await ElementHelpers.waitForState(closeButton, "visible");
     await closeButton.click();
   }
 
   async enterEmail(email: string) {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     await ElementHelpers.enterTextWithValidation(
       this.frame,
       this.components.emailInput,
       email,
-      'Email',
+      "Email",
     );
   }
 
   async clickSendCode() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const sendCodeButton = this.frame.locator(this.components.sendCodeButton);
-    await ElementHelpers.waitForState(sendCodeButton, 'visible');
+    await ElementHelpers.waitForState(sendCodeButton, "visible");
     await sendCodeButton.click();
   }
 
   async isVerificationSectionVisible() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const verificationSection = this.frame.locator(this.components.verificationSection);
-    return await ElementHelpers.waitForState(verificationSection, 'visible');
+    return await ElementHelpers.waitForState(verificationSection, "visible");
   }
 
   async extractCodeFromMessage() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const messageContainer = this.frame.locator(this.components.messageContainer);
-    await ElementHelpers.waitForState(messageContainer, 'visible');
+    await ElementHelpers.waitForState(messageContainer, "visible");
 
-    const messageText = (await messageContainer.textContent()) || '';
+    const messageText = (await messageContainer.textContent()) || "";
     const codeMatch = messageText.match(/Demo code: (\d{6})\)/);
 
     if (codeMatch && codeMatch[1]) {
       return codeMatch[1];
     }
 
-    throw new Error('Could not extract verification code from message');
+    throw new Error("Could not extract verification code from message");
   }
 
   async enterVerificationCode(code: string) {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     await ElementHelpers.enterTextWithValidation(
       this.frame,
       this.components.codeInput,
       code,
-      'Code',
+      "Code",
     );
   }
 
   async clickVerifyCode() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const verifyButton = this.frame.locator(this.components.verifyCodeButton);
-    await ElementHelpers.waitForState(verifyButton, 'visible');
+    await ElementHelpers.waitForState(verifyButton, "visible");
     await verifyButton.click();
   }
 
   async getMessageText() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const messageContainer = this.frame.locator(this.components.messageContainer);
-    await ElementHelpers.waitForState(messageContainer, 'visible');
+    await ElementHelpers.waitForState(messageContainer, "visible");
     return await messageContainer.textContent();
   }
 
   async isSuccessMessageVisible() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const successMessage = this.frame.locator(this.components.successMessage);
-    return await ElementHelpers.waitForState(successMessage, 'visible');
+    return await ElementHelpers.waitForState(successMessage, "visible");
   }
 
   async isErrorMessageVisible() {
     if (!this.frame) {
-      throw new Error('Frame is not initialized. Call navigateToTwoFactorAuthPage first.');
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
     }
 
     const errorMessage = this.frame.locator(this.components.errorMessage);
-    return await ElementHelpers.waitForState(errorMessage, 'visible');
+    return await ElementHelpers.waitForState(errorMessage, "visible");
   }
 
   /**
@@ -158,7 +158,7 @@ export class TwoFactorAuthActions {
   async completeTwoFactorAuth(testData: TwoFactorAuthData, useValidCode: boolean = true) {
     // Early return if invalid code is needed but not provided
     if (!useValidCode && !testData.invalidCode) {
-      throw new Error('Invalid code not provided in test data');
+      throw new Error("Invalid code not provided in test data");
     }
 
     // First handle the popup if it's present
