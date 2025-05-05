@@ -11,7 +11,9 @@ test.describe("CandyMapper Homepage Tests", () => {
     await homePageActions.navigateToHomePage();
   });
 
-  test("should display correct URL after navigating to home page", async ({ page }) => {
+  test("TC_002_001:Given_userOnHomepage_When_navigatesToHomePage_Then_displaysCorrectUrl", async ({
+    page,
+  }) => {
     // Arrange
     const expectedUrl = urls.homePage;
 
@@ -19,14 +21,16 @@ test.describe("CandyMapper Homepage Tests", () => {
     await expect(page).toHaveURL(expectedUrl, { timeout: HomePageData.timeouts.navigation });
   });
 
-  test("should have correct page title", async ({ page }) => {
+  test("TC_002_002:Given_userOnHomepage_When_pageLoads_Then_hasCorrectPageTitle", async ({
+    page,
+  }) => {
     await expect(page).toHaveTitle(HomePageData.expectedTitle);
     // or with proper AAA pattern:
     // const title = await page.title();
     // expect(title).toBe(HomePageData.expectedTitle);
   });
 
-  test("should display correct main heading", async () => {
+  test("TC_002_003:Given_userOnHomepage_When_popupClosed_Then_displaysCorrectMainHeading", async () => {
     // Arrange
     await homePageActions.closePopup();
 
@@ -37,7 +41,7 @@ test.describe("CandyMapper Homepage Tests", () => {
     expect(headingText?.trim()).toContain(HomePageData.expectedHeadingText);
   });
 
-  test("should close popup after clicking close button", async () => {
+  test("TC_002_004:Given_userOnHomepage_When_closesPopup_Then_popupIsNotVisible", async () => {
     // Arrange
     const isPopupVisibleInitially = await homePageActions.isPopupVisible();
 
@@ -50,7 +54,7 @@ test.describe("CandyMapper Homepage Tests", () => {
     expect(isPopupVisibleAfterClose).toBeFalsy();
   });
 
-  test("should allow filling and submitting contact form", async () => {
+  test("TC_002_005:Given_userOnHomepage_When_fillsAndSubmitsContactForm_Then_successMessageIsVisible", async () => {
     // Arrange
     await homePageActions.closePopup();
     const contactData = TestData.contactForm().withEmail;
@@ -66,7 +70,7 @@ test.describe("CandyMapper Homepage Tests", () => {
     expect(successText).toContain(HomePageData.expectedSuccessText);
   });
 
-  test("should display validation error when email is not provided", async () => {
+  test("TC_002_006:Given_userOnHomepage_When_submitsContactFormWithoutEmail_Then_validationErrorIsDisplayed", async () => {
     // Arrange
     await homePageActions.closePopup();
     const contactData = TestData.contactForm().withoutEmail;
