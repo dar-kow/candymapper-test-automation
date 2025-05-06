@@ -4,6 +4,12 @@ import { PartyData } from "./data";
 import { ElementHelpers, ElementState, urls } from "../utils";
 import { BasePageActions } from "../utils/BasePageActions";
 
+export interface PartyActionTarget {
+  buttonSelector: string;
+  expectedUrl: string | RegExp;
+  closePopup?: boolean;
+}
+
 export class HalloweenPartyActions extends BasePageActions {
   private components: HalloweenPartyComponents;
   private frame: Frame | null = null;
@@ -46,55 +52,14 @@ export class HalloweenPartyActions extends BasePageActions {
     }
   }
 
-  async clickHostPartyButton() {
-    await this.closePopupIfPresent();
-    const button = this.page.locator(this.components.hostPartyButton);
+  async clickPartyActionTarget(target: PartyActionTarget) {
+    if (target.closePopup) {
+      await this.closePopupIfPresent();
+    }
+    const button = this.page.locator(target.buttonSelector);
     await ElementHelpers.waitForState(button, ElementState.Visible);
     await button.click();
-    await this.page.waitForSelector(this.components.mainHeading);
-  }
-
-  async clickAttendPartyButton() {
-    await this.closePopupIfPresent();
-    const button = this.page.locator(this.components.attendPartyButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForSelector(this.components.mainHeading);
-  }
-
-  async selectZombiesTheme() {
-    const button = this.page.locator(this.components.zombiesButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForURL(/party-location/);
-  }
-
-  async selectGhostsTheme() {
-    const button = this.page.locator(this.components.ghostsButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForURL(/party-location/);
-  }
-
-  async selectZombietonLocation() {
-    const button = this.page.locator(this.components.zombiesButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForURL(/party-location/);
-  }
-
-  async selectGhostvilleLocation() {
-    const button = this.page.locator(this.components.ghostsButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForURL(/party-location/);
-  }
-
-  async clickGoBackButton() {
-    const button = this.page.locator(this.components.goBackButton);
-    await ElementHelpers.waitForState(button, ElementState.Visible);
-    await button.click();
-    await this.page.waitForURL(/error-404/);
+    await this.page.waitForURL(target.expectedUrl);
   }
 
   async selectNumberOfGuests(guests: number) {

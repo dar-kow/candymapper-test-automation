@@ -1,4 +1,7 @@
 import { faker } from "@faker-js/faker";
+import { PartyActionTarget } from "./actions";
+import { urls } from "../utils";
+import { HalloweenPartyComponents } from "./components";
 
 export interface PartyData {
   email: string;
@@ -42,4 +45,37 @@ export const HalloweenPartyPageData = {
     animation: 2000,
     form: 5000,
   },
+};
+
+export const PartyActionTargets = {
+  hostParty: {
+    buttonSelector: new HalloweenPartyComponents().hostPartyButton,
+    expectedUrl: urls.hostParty,
+    closePopup: true,
+  } as PartyActionTarget,
+  attendParty: {
+    buttonSelector: new HalloweenPartyComponents().attendPartyButton,
+    expectedUrl: urls.attendParty,
+    closePopup: true,
+  } as PartyActionTarget,
+  zombiesTheme: {
+    buttonSelector: new HalloweenPartyComponents().zombiesButton,
+    expectedUrl: urls.partyLocation,
+  } as PartyActionTarget,
+  ghostsTheme: {
+    buttonSelector: new HalloweenPartyComponents().ghostsButton,
+    expectedUrl: urls.partyLocation,
+  } as PartyActionTarget,
+  zombietonLocation: {
+    buttonSelector: new HalloweenPartyComponents().zombiesButton,
+    expectedUrl: urls.partyLocation,
+  } as PartyActionTarget,
+  ghostvilleLocation: {
+    buttonSelector: new HalloweenPartyComponents().ghostsButton,
+    expectedUrl: urls.partyLocation,
+  } as PartyActionTarget,
+  goBack: {
+    buttonSelector: new HalloweenPartyComponents().goBackButton,
+    expectedUrl: urls.error404,
+  } as PartyActionTarget,
 };

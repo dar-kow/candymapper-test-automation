@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HalloweenPartyActions } from "./actions";
-import { HalloweenPartyPageData, HalloweenPartyTestData } from "./data";
-import { urls } from "../utils";
+import { HalloweenPartyPageData, HalloweenPartyTestData, PartyActionTargets } from "./data";
 
 test.describe("CandyMapper Halloween Party Tests", () => {
   let partyActions: HalloweenPartyActions;
@@ -26,7 +25,7 @@ test.describe("CandyMapper Halloween Party Tests", () => {
 
   test.describe("Hosting a Party Flow", () => {
     test.beforeEach(async () => {
-      await partyActions.clickHostPartyButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.hostParty);
     });
 
     test("TC_003_002:Given_userOnHalloweenPartyPage_When_clicksHostParty_Then_navigatesToThemeSelectionPage", async ({
@@ -35,7 +34,7 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(urls.hostParty);
+      await expect(page).toHaveURL(PartyActionTargets.hostParty.expectedUrl);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.themeHeading);
     });
@@ -46,10 +45,10 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectZombiesTheme();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.zombiesTheme);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.zombiesTheme.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
@@ -60,17 +59,17 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectGhostsTheme();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.ghostsTheme);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.ghostsTheme.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
     test.describe("Party Registration Form", () => {
       test.beforeEach(async () => {
-        await partyActions.selectZombiesTheme();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.zombiesTheme);
       });
 
       test("TC_003_005:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
@@ -133,7 +132,7 @@ test.describe("CandyMapper Halloween Party Tests", () => {
 
   test.describe("Attending a Party Flow", () => {
     test.beforeEach(async () => {
-      await partyActions.clickAttendPartyButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.attendParty);
     });
 
     test("TC_003_009:Given_userOnHalloweenPartyPage_When_clicksAttendParty_Then_navigatesToAttendPartyPage", async ({
@@ -142,7 +141,7 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(urls.attendParty);
+      await expect(page).toHaveURL(PartyActionTargets.attendParty.expectedUrl);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.attendAParty);
     });
@@ -153,10 +152,10 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectZombietonLocation();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.zombietonLocation);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.zombietonLocation.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
@@ -167,10 +166,10 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectGhostvilleLocation();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.ghostvilleLocation);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.ghostvilleLocation.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
@@ -181,15 +180,15 @@ test.describe("CandyMapper Halloween Party Tests", () => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.clickGoBackButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.goBack);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.goBack.expectedUrl);
     });
 
     test.describe("Party Registration Form After Selecting Zombieton", () => {
       test.beforeEach(async () => {
-        await partyActions.selectZombietonLocation();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.zombietonLocation);
       });
 
       test("TC_003_013:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
@@ -221,7 +220,7 @@ test.describe("CandyMapper Halloween Party Tests", () => {
 
     test.describe("Party Registration Form After Selecting Ghostville", () => {
       test.beforeEach(async () => {
-        await partyActions.selectGhostvilleLocation();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.ghostvilleLocation);
       });
 
       test("TC_003_015:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
