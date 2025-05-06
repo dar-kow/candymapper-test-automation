@@ -22,5 +22,8 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

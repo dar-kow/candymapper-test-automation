@@ -1,9 +1,8 @@
-import { test, expect } from '@playwright/test';
-import { HalloweenPartyActions } from './actions';
-import { HalloweenPartyPageData, HalloweenPartyTestData } from './data';
-import { urls } from '../utils';
+import { test, expect } from "@playwright/test";
+import { HalloweenPartyActions } from "./actions";
+import { HalloweenPartyPageData, HalloweenPartyTestData, PartyActionTargets } from "./data";
 
-test.describe('CandyMapper Halloween Party Tests', () => {
+test.describe("CandyMapper Halloween Party Tests", () => {
   let partyActions: HalloweenPartyActions;
 
   test.beforeEach(async ({ page }) => {
@@ -12,7 +11,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     await partyActions.closePopupIfPresent();
   });
 
-  test('should display correct headings on the main Halloween party page', async () => {
+  test("TC_003_001:Given_userOnHalloweenPartyPage_When_pageLoads_Then_displaysCorrectHeadings", async () => {
     // Arrange - in beforeEach
 
     // Act
@@ -24,53 +23,56 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     expect(secondaryHeadingText?.trim()).toBe(HalloweenPartyPageData.headings.subHeading);
   });
 
-  test.describe('Hosting a Party Flow', () => {
+  test.describe("Hosting a Party Flow", () => {
     test.beforeEach(async () => {
-      await partyActions.clickHostPartyButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.hostParty);
     });
 
-    test('should navigate to theme selection page when clicking Host Party', async ({ page }) => {
+    test("TC_003_002:Given_userOnHalloweenPartyPage_When_clicksHostParty_Then_navigatesToThemeSelectionPage", async ({
+      page,
+    }) => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(/host-a-party-1/);
+      await expect(page).toHaveURL(PartyActionTargets.hostParty.expectedUrl);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.themeHeading);
     });
 
-    test('should navigate to party location page when selecting Zombies theme', async ({
+    test("TC_003_003:Given_userOnThemeSelectionPage_When_selectsZombiesTheme_Then_navigatesToPartyLocationPage", async ({
       page,
     }) => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectZombiesTheme();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.zombiesTheme);
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(PartyActionTargets.zombiesTheme.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test('should navigate to party location page when selecting Ghosts theme', async ({ page }) => {
+    test("TC_003_004:Given_userOnThemeSelectionPage_When_selectsGhostsTheme_Then_navigatesToPartyLocationPage", async ({
+      page,
+    }) => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectGhostsTheme();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.ghostsTheme);
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(PartyActionTargets.ghostsTheme.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test.describe('Party Registration Form', () => {
+    test.describe("Party Registration Form", () => {
       test.beforeEach(async () => {
-        await partyActions.selectZombiesTheme();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.zombiesTheme);
       });
 
-      // failing because of wrong implementation - option value is not set correctly in the select element
-      test('should allow selecting different numbers of guests', async () => {
+      test("TC_003_005:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -82,7 +84,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show error message when email is empty', async () => {
+      test("TC_003_006:Given_userOnPartyRegistrationForm_When_submitsWithoutEmail_Then_showsEmailError", async () => {
         // Arrange - in beforeEach
 
         // Act
@@ -95,7 +97,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         expect(errorText).toContain(HalloweenPartyPageData.messages.emailError);
       });
 
-      test('should show error message when email is invalid', async () => {
+      test("TC_003_007:Given_userOnPartyRegistrationForm_When_entersInvalidEmail_Then_showsEmailError", async () => {
         // Arrange
         const partyData = {
           email: HalloweenPartyTestData.getInvalidEmail(),
@@ -112,7 +114,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         expect(errorText).toContain(HalloweenPartyPageData.messages.emailError);
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("TC_003_008:Given_userOnPartyRegistrationForm_When_entersValidEmail_Then_showsConfirmationMessage", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 
@@ -128,65 +130,68 @@ test.describe('CandyMapper Halloween Party Tests', () => {
     });
   });
 
-  test.describe('Attending a Party Flow', () => {
+  test.describe("Attending a Party Flow", () => {
     test.beforeEach(async () => {
-      await partyActions.clickAttendPartyButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.attendParty);
     });
 
-    test('should navigate to attend party page when clicking Attend Party', async ({ page }) => {
+    test("TC_003_009:Given_userOnHalloweenPartyPage_When_clicksAttendParty_Then_navigatesToAttendPartyPage", async ({
+      page,
+    }) => {
       // Arrange - in beforeEach
 
       // Assert
-      await expect(page).toHaveURL(/attend-a-party/);
+      await expect(page).toHaveURL(PartyActionTargets.attendParty.expectedUrl);
       const headingText = await partyActions.getMainHeadingText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.attendAParty);
     });
 
-    test('should navigate to party location page when selecting Zombieton location', async ({
+    test("TC_003_010:Given_userOnAttendPartyPage_When_selectsZombietonLocation_Then_navigatesToPartyLocationPage", async ({
       page,
     }) => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectZombietonLocation();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.zombietonLocation);
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(PartyActionTargets.zombietonLocation.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    test('should navigate to party location page when selecting Ghostville location', async ({
+    test("TC_003_011:Given_userOnAttendPartyPage_When_selectsGhostvilleLocation_Then_navigatesToPartyLocationPage", async ({
       page,
     }) => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.selectGhostvilleLocation();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.ghostvilleLocation);
 
       // Assert
-      await expect(page).toHaveURL(/party-location/);
+      await expect(page).toHaveURL(PartyActionTargets.ghostvilleLocation.expectedUrl);
       const headingText = await partyActions.getHtmlSectionText();
       expect(headingText?.trim()).toBe(HalloweenPartyPageData.headings.partyLocation);
     });
 
-    //error bug - should navigate to home page instead of 404 page
-    test('should navigate to main page when clicking Go Back button', async ({ page }) => {
+    test("TC_003_012:Given_userOnAttendPartyPage_When_clicksGoBackButton_Then_navigatesToMainPage", async ({
+      page,
+    }) => {
       // Arrange - in beforeEach
 
       // Act
-      await partyActions.clickGoBackButton();
+      await partyActions.clickPartyActionTarget(PartyActionTargets.goBack);
 
       // Assert
-      await expect(page).toHaveURL(urls.partyLocation);
+      await expect(page).toHaveURL(PartyActionTargets.goBack.expectedUrl);
     });
 
-    test.describe('Party Registration Form After Selecting Zombieton', () => {
+    test.describe("Party Registration Form After Selecting Zombieton", () => {
       test.beforeEach(async () => {
-        await partyActions.selectZombietonLocation();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.zombietonLocation);
       });
 
-      test('should allow selecting different numbers of guests', async () => {
+      test("TC_003_013:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -198,7 +203,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("TC_003_014:Given_userOnPartyRegistrationForm_When_entersValidEmail_Then_showsConfirmationMessage", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 
@@ -213,12 +218,12 @@ test.describe('CandyMapper Halloween Party Tests', () => {
       });
     });
 
-    test.describe('Party Registration Form After Selecting Ghostville', () => {
+    test.describe("Party Registration Form After Selecting Ghostville", () => {
       test.beforeEach(async () => {
-        await partyActions.selectGhostvilleLocation();
+        await partyActions.clickPartyActionTarget(PartyActionTargets.ghostvilleLocation);
       });
 
-      test('should allow selecting different numbers of guests', async () => {
+      test("TC_003_015:Given_userOnPartyRegistrationForm_When_selectsNumberOfGuests_Then_optionIsSelected", async () => {
         // Test with each possible value (0, 1, 2)
         for (let i = 0; i <= 2; i++) {
           // Act
@@ -230,7 +235,7 @@ test.describe('CandyMapper Halloween Party Tests', () => {
         }
       });
 
-      test('should show confirmation message when email is valid', async () => {
+      test("TC_003_016:Given_userOnPartyRegistrationForm_When_entersValidEmail_Then_showsConfirmationMessage", async () => {
         // Arrange
         const partyData = HalloweenPartyTestData.getPartyData();
 
