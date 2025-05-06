@@ -3,7 +3,7 @@ import { HalloweenPartyActions } from "./actions";
 import { HalloweenPartyPageData, HalloweenPartyTestData } from "./data";
 import { urls } from "../utils";
 
-test.describe.only("CandyMapper Halloween Party Tests", () => {
+test.describe("CandyMapper Halloween Party Tests", () => {
   let partyActions: HalloweenPartyActions;
 
   test.beforeEach(async ({ page }) => {
