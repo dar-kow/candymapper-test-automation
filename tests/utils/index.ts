@@ -2,3 +2,4 @@
 // but that will soon become a great project :D
 export * from "./urls";
 export * from "./helpers";
+export * from "./types";

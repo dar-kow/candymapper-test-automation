@@ -1,13 +1,6 @@
 import { Page, BrowserContext, FrameLocator } from "@playwright/test";
 import { NavigationComponents } from "./components";
-import { ElementHelpers, urls } from "../utils";
-
-export enum ElementState {
-  Visible = "visible",
-  Hidden = "hidden",
-  Attached = "attached",
-  Detached = "detached",
-}
+import { ElementHelpers, ElementState, MenuType, urls } from "../utils";
 
 export class NavigationActions {
   private page: Page;
@@ -27,34 +20,46 @@ export class NavigationActions {
     }
   }
 
-  async clickNavLinkByText(linkText: string) {
-    const navLinks = this.page
-      .locator(this.components.visibleNavItems)
-      .locator(this.components.navLinks);
-    const count = await navLinks.count();
+  /**
+   * Clicks a navigation or dropdown link by text.
+   * @param linkText - Visible text of the link to click.
+   * @param type - MenuType.Nav for main nav, MenuType.Dropdown for more menu dropdown.
+   */
+  async clickMenuLinkByText(linkText: string, type: MenuType) {
+    let containerSelector: string;
+    let linkSelector: string;
+
+    switch (type) {
+      case MenuType.Nav:
+        containerSelector = this.components.visibleNavItems;
+        linkSelector = this.components.navLinks;
+        break;
+      case MenuType.Dropdown:
+        containerSelector = this.components.moreDropdownItems;
+        linkSelector = this.components.moreDropdownLinks;
+        break;
+      default:
+        throw new Error(`Unknown menu type: ${type}`);
+    }
+
+    const links = this.page.locator(containerSelector).locator(linkSelector);
+    const count = await links.count();
 
     for (let i = 0; i < count; i++) {
-      const text = await navLinks.nth(i).textContent();
+      const text = await links.nth(i).textContent();
       if (text?.trim() === linkText) {
-        await navLinks.nth(i).click();
+        await links.nth(i).click();
         return;
       }
     }
 
-    throw new Error(`Nav link with text "${linkText}" not found`);
+    throw new Error(`Link with text "${linkText}" not found in selector: ${containerSelector}`);
   }
 
   async clickNavLinkAndWaitForNewPage(linkText: string, context: BrowserContext) {
-    // Get the current number of pages
     const pagesBefore = context.pages().length;
-
-    // Click the link
-    await this.clickNavLinkByText(linkText);
-
-    // Wait for a new page to be created
+    await this.clickMenuLinkByText(linkText, MenuType.Nav);
     await context.waitForEvent("page");
-
-    // Return the newly opened page
     return context.pages()[pagesBefore];
   }
 
@@ -68,34 +73,10 @@ export class NavigationActions {
     await ElementHelpers.waitForState(dropdown, ElementState.Visible);
   }
 
-  async clickMoreMenuLinkByText(linkText: string) {
-    const moreLinks = this.page
-      .locator(this.components.moreDropdownItems)
-      .locator(this.components.moreDropdownLinks);
-    const count = await moreLinks.count();
-
-    for (let i = 0; i < count; i++) {
-      const text = await moreLinks.nth(i).textContent();
-      if (text?.trim() === linkText) {
-        await moreLinks.nth(i).click();
-        return;
-      }
-    }
-
-    throw new Error(`More menu link with text "${linkText}" not found`);
-  }
-
   async clickMoreMenuLinkAndWaitForNewPage(linkText: string, context: BrowserContext) {
-    // Get the current number of pages
     const pagesBefore = context.pages().length;
-
-    // Click the link
-    await this.clickMoreMenuLinkByText(linkText);
-
-    // Wait for a new page to be created
+    await this.clickMenuLinkByText(linkText, MenuType.Dropdown);
     await context.waitForEvent("page");
-
-    // Return the newly opened page
     return context.pages()[pagesBefore];
   }
 
