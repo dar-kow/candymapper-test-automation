@@ -1,15 +1,24 @@
 import { Page, BrowserContext, FrameLocator } from "@playwright/test";
 import { NavigationComponents } from "./components";
 import { ElementHelpers, ElementState, MenuType, urls } from "../utils";
+import { BasePageActions } from "../utils/BasePageActions";
 
-export class NavigationActions {
-  private page: Page;
+export class NavigationActions extends BasePageActions {
   private components: NavigationComponents;
   private frameLocator: FrameLocator | undefined;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.components = new NavigationComponents();
+  }
+
+  // // Derived class MUST implement abstract methods
+  protected getPopupSelector() {
+    return this.components.popup;
+  }
+
+  protected getCloseButtonSelector() {
+    return this.components.popupCloseButton;
   }
 
   async navigateToHomePage() {
@@ -146,23 +155,6 @@ export class NavigationActions {
     } catch (error) {
       console.error("Error checking email field in iframe:", error);
       return false;
-    }
-  }
-
-  async closePopupIfPresent() {
-    try {
-      const popup = this.page.locator(this.components.popup);
-      // Wait for popup to load
-      await ElementHelpers.waitForState(popup, ElementState.Visible);
-
-      // Click the close button
-      await this.page.click(this.components.popupCloseButton);
-
-      // Wait for popup to disappear
-      await ElementHelpers.waitForState(popup, ElementState.Hidden);
-    } catch (error) {
-      // If popup doesn't appear or times out, just continue
-      // console.log('No popup found or already closed');
     }
   }
 }

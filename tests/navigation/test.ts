@@ -3,7 +3,7 @@ import { NavigationActions } from "./actions";
 import { NavigationData } from "./data";
 import { MenuType, urls } from "../utils";
 
-test.describe("CandyMapper Main Navigation Tests", () => {
+test.describe.only("CandyMapper Main Navigation Tests", () => {
   let navigationActions: NavigationActions;
 
   test.beforeEach(async ({ page }) => {
