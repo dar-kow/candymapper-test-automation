@@ -3,7 +3,7 @@ import { HomePageData, TestData } from "./data";
 import { HomePageActions } from "./actions";
 import { urls } from "../utils";
 
-test.describe("CandyMapper Homepage Tests", () => {
+test.describe.only("CandyMapper Homepage Tests", () => {
   let homePageActions: HomePageActions;
 
   test.beforeEach(async ({ page }) => {
