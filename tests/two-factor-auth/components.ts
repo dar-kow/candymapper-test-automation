@@ -2,6 +2,7 @@ export class TwoFactorAuthComponents {
   // that was tricky I didn't even notice that iframe
   iframe = 'div[data-ux="Element"] iframe';
 
+  popupContainter = "#popup-widget88933";
   popupCloseButton = "#popup-widget88933-close-icon";
 
   heading = "h1";

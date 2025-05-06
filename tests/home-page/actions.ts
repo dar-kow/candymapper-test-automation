@@ -1,15 +1,24 @@
 import { Locator, Page } from "@playwright/test";
-import { ElementHelpers, urls } from "../utils";
+import { ElementHelpers, ElementState, urls } from "../utils";
 import { HomePageComponents } from "./components";
 import { ContactFormData } from "./data";
+import { BasePageActions } from "../utils/BasePageActions";
 
-export class HomePageActions {
-  private page: Page;
+export class HomePageActions extends BasePageActions {
   private components: HomePageComponents;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.components = new HomePageComponents();
+  }
+
+  // // Derived class MUST implement abstract methods
+  protected getPopupSelector() {
+    return this.components.popupContainer;
+  }
+
+  protected getCloseButtonSelector() {
+    return this.components.popupCloseButton;
   }
 
   async navigateToHomePage() {
@@ -18,17 +27,6 @@ export class HomePageActions {
     if (!isUrlCorrect) {
       throw new Error(`URL did not reach the expected state: ${urls.homePage}`);
     }
-  }
-
-  async isPopupVisible() {
-    const popup = this.page.locator(this.components.popupContainer);
-    return await popup.isVisible();
-  }
-
-  async closePopup() {
-    const closeButton = this.page.locator(this.components.popupCloseButton);
-    await ElementHelpers.waitForState(closeButton, "visible");
-    await closeButton.click();
   }
 
   private async isInputFillable(input: Locator) {
@@ -43,7 +41,7 @@ export class HomePageActions {
 
     await input.scrollIntoViewIfNeeded();
 
-    await ElementHelpers.waitForState(input, "visible");
+    await ElementHelpers.waitForState(input, ElementState.Visible);
 
     if (!(await this.isInputFillable(input))) {
       throw new Error(`Input with selector "${selector}" is not fillable (disabled or readonly)`);
@@ -89,14 +87,14 @@ export class HomePageActions {
   async submitContactForm() {
     const submitButton = this.page.locator(this.components.submitButton);
     await submitButton.scrollIntoViewIfNeeded();
-    await ElementHelpers.waitForState(submitButton, "visible");
+    await ElementHelpers.waitForState(submitButton, ElementState.Visible);
     await submitButton.hover();
     await submitButton.click();
   }
 
   async isSuccessMessageVisible() {
     const successMessage = this.page.locator(this.components.formSubmitSuccess);
-    await ElementHelpers.waitForState(successMessage, "visible", 15000);
+    await ElementHelpers.waitForState(successMessage, ElementState.Visible, 15000);
     return true;
   }
 

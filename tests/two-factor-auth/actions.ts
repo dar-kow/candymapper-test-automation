@@ -1,17 +1,26 @@
 import { Page, Frame, FrameLocator } from "@playwright/test";
 import { TwoFactorAuthComponents } from "./components";
 import { TwoFactorAuthData } from "./data";
-import { ElementHelpers, urls } from "../utils";
+import { ElementHelpers, ElementState, urls } from "../utils";
+import { BasePageActions } from "../utils/BasePageActions";
 
-export class TwoFactorAuthActions {
-  private page: Page;
+export class TwoFactorAuthActions extends BasePageActions {
   private components: TwoFactorAuthComponents;
   private frame: Frame | null = null;
   private frameLocator: FrameLocator | null = null;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.components = new TwoFactorAuthComponents();
+  }
+
+  // // Derived class MUST implement abstract methods
+  protected getPopupSelector() {
+    return this.components.popupContainter;
+  }
+
+  protected getCloseButtonSelector() {
+    return this.components.popupCloseButton;
   }
 
   // This method handles one of the most challenging parts of the test - working with iframes.
@@ -42,51 +51,35 @@ export class TwoFactorAuthActions {
     }
   }
 
-  async closePopup() {
-    const closeButton = this.page.locator(this.components.popupCloseButton);
-    await ElementHelpers.waitForState(closeButton, "visible");
-    await closeButton.click();
+  private getFrameOrThrow() {
+    if (!this.frame) {
+      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
+    }
+    return this.frame;
   }
 
   async enterEmail(email: string) {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    await ElementHelpers.enterTextWithValidation(
-      this.frame,
-      this.components.emailInput,
-      email,
-      "Email",
-    );
+    const frame = this.getFrameOrThrow();
+    await ElementHelpers.enterTextWithValidation(frame, this.components.emailInput, email, "Email");
   }
 
   async clickSendCode() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const sendCodeButton = this.frame.locator(this.components.sendCodeButton);
-    await ElementHelpers.waitForState(sendCodeButton, "visible");
+    const frame = this.getFrameOrThrow();
+    const sendCodeButton = frame.locator(this.components.sendCodeButton);
+    await ElementHelpers.waitForState(sendCodeButton, ElementState.Visible);
     await sendCodeButton.click();
   }
 
   async isVerificationSectionVisible() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const verificationSection = this.frame.locator(this.components.verificationSection);
-    return await ElementHelpers.waitForState(verificationSection, "visible");
+    const frame = this.getFrameOrThrow();
+    const verificationSection = frame.locator(this.components.verificationSection);
+    return await ElementHelpers.waitForState(verificationSection, ElementState.Visible);
   }
 
   async extractCodeFromMessage() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const messageContainer = this.frame.locator(this.components.messageContainer);
-    await ElementHelpers.waitForState(messageContainer, "visible");
+    const frame = this.getFrameOrThrow();
+    const messageContainer = frame.locator(this.components.messageContainer);
+    await ElementHelpers.waitForState(messageContainer, ElementState.Visible);
 
     const messageText = (await messageContainer.textContent()) || "";
     const codeMatch = messageText.match(/Demo code: (\d{6})\)/);
@@ -99,54 +92,34 @@ export class TwoFactorAuthActions {
   }
 
   async enterVerificationCode(code: string) {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    await ElementHelpers.enterTextWithValidation(
-      this.frame,
-      this.components.codeInput,
-      code,
-      "Code",
-    );
+    const frame = this.getFrameOrThrow();
+    await ElementHelpers.enterTextWithValidation(frame, this.components.codeInput, code, "Code");
   }
 
   async clickVerifyCode() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const verifyButton = this.frame.locator(this.components.verifyCodeButton);
-    await ElementHelpers.waitForState(verifyButton, "visible");
+    const frame = this.getFrameOrThrow();
+    const verifyButton = frame.locator(this.components.verifyCodeButton);
+    await ElementHelpers.waitForState(verifyButton, ElementState.Visible);
     await verifyButton.click();
   }
 
   async getMessageText() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const messageContainer = this.frame.locator(this.components.messageContainer);
-    await ElementHelpers.waitForState(messageContainer, "visible");
+    const frame = this.getFrameOrThrow();
+    const messageContainer = frame.locator(this.components.messageContainer);
+    await ElementHelpers.waitForState(messageContainer, ElementState.Visible);
     return await messageContainer.textContent();
   }
 
   async isSuccessMessageVisible() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const successMessage = this.frame.locator(this.components.successMessage);
-    return await ElementHelpers.waitForState(successMessage, "visible");
+    const frame = this.getFrameOrThrow();
+    const successMessage = frame.locator(this.components.successMessage);
+    return await ElementHelpers.waitForState(successMessage, ElementState.Visible);
   }
 
   async isErrorMessageVisible() {
-    if (!this.frame) {
-      throw new Error("Frame is not initialized. Call navigateToTwoFactorAuthPage first.");
-    }
-
-    const errorMessage = this.frame.locator(this.components.errorMessage);
-    return await ElementHelpers.waitForState(errorMessage, "visible");
+    const frame = this.getFrameOrThrow();
+    const errorMessage = frame.locator(this.components.errorMessage);
+    return await ElementHelpers.waitForState(errorMessage, ElementState.Visible);
   }
 
   /**

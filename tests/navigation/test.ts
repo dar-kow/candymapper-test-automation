@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { NavigationActions } from "./actions";
 import { NavigationData } from "./data";
-import { urls } from "../utils";
+import { MenuType, urls } from "../utils";
 
 test.describe("CandyMapper Main Navigation Tests", () => {
   let navigationActions: NavigationActions;
@@ -18,7 +18,7 @@ test.describe("CandyMapper Main Navigation Tests", () => {
     // Arrange in beforeEach
 
     // Act
-    await navigationActions.clickNavLinkByText(NavigationData.menuLabels.joinUs);
+    await navigationActions.clickMenuLinkByText(NavigationData.menuLabels.joinUs, MenuType.Nav);
 
     // Assert
     await expect(page).toHaveURL(urls.joinUs, {
@@ -65,7 +65,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     // Arrange - in beforeEach
 
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.halloweenParty);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.halloweenParty,
+      MenuType.Dropdown,
+    );
 
     // Assert
     await expect(page).toHaveURL(urls.halloweenParty, {
@@ -82,7 +85,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     // Arrange - in beforeEach
 
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.launchCandyMapper);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.launchCandyMapper,
+      MenuType.Dropdown,
+    );
 
     // Assert
     await expect(page).toHaveURL(urls.launchCandyMapper, {
@@ -142,7 +148,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.findMyCandy);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.findMyCandy,
+      MenuType.Dropdown,
+    );
     const sectionTitle = await navigationActions.getFindMyCandyTitle();
 
     // Assert
@@ -156,7 +165,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Click on Automation Sandbox link in More dropdown
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.expectedContent.sandboxTools);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.expectedContent.sandboxTools,
+      MenuType.Dropdown,
+    );
 
     // Verify URL
     await expect(page).toHaveURL(urls.automationSandbox, {
@@ -190,7 +202,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.magicObjectModel);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.magicObjectModel,
+      MenuType.Dropdown,
+    );
     const sectionTitle = await navigationActions.getMagicObjectModelTitle();
 
     // Assert
@@ -204,7 +219,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.sandboxTools);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.sandboxTools,
+      MenuType.Dropdown,
+    );
     const buttonsVisible = await navigationActions.areSandboxToolButtonsVisible();
 
     // Assert
@@ -218,7 +236,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.vampirasBlog);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.vampirasBlog,
+      MenuType.Dropdown,
+    );
     const sectionTitle = await navigationActions.getVampirasBlogTitle();
 
     // Assert
@@ -232,7 +253,10 @@ test.describe("CandyMapper More Menu Navigation Tests", () => {
     page,
   }) => {
     // Act
-    await navigationActions.clickMoreMenuLinkByText(NavigationData.menuLabels.twoFAValidation);
+    await navigationActions.clickMenuLinkByText(
+      NavigationData.menuLabels.twoFAValidation,
+      MenuType.Dropdown,
+    );
     const isIframeVisible = await navigationActions.is2FAIframeVisible();
 
     // Assert
