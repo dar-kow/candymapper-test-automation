@@ -1,4 +1,4 @@
-import { Frame, Locator, Page } from '@playwright/test';
+import { Frame, Locator, Page } from "@playwright/test";
 
 type PageOrFrameLocator = Page | Frame;
 
@@ -11,7 +11,7 @@ export class ElementHelpers {
    */
   static async waitForState(
     locator: Locator,
-    state: 'attached' | 'detached' | 'visible' | 'hidden',
+    state: "attached" | "detached" | "visible" | "hidden",
     timeout: number = 5000,
   ) {
     try {
@@ -38,7 +38,7 @@ export class ElementHelpers {
     fieldName: string,
   ) {
     const input = page.locator(locator);
-    await ElementHelpers.waitForState(input, 'visible');
+    await ElementHelpers.waitForState(input, "visible");
 
     await input.click();
     await input.clear();

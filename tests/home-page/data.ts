@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 export interface ContactFormData {
   firstName: string;
   lastName: string;
@@ -25,12 +25,11 @@ export class TestData {
 }
 
 export const HomePageData = {
-  url: 'https://candymapper.com/',
-  expectedTitle: 'CandyMapper.Com',
+  expectedTitle: "CandyMapper.Com",
 
-  expectedSuccessText: 'Thank you for your inquiry! We will get back to you within 48 Years.',
-  expectedEmailErrorText: 'Please enter a valid email address.',
-  expectedHeadingText: 'CandyMapper: \nThe Website That Goes Wrong!',
+  expectedSuccessText: "Thank you for your inquiry! We will get back to you within 48 Years.",
+  expectedEmailErrorText: "Please enter a valid email address.",
+  expectedHeadingText: "CandyMapper: \nThe Website That Goes Wrong!",
 
   timeouts: {
     navigation: 10000,
